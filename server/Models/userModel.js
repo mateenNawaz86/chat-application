@@ -17,12 +17,14 @@ const userModel = new Schema(
     },
 
     password: {
-      type: Number,
+      type: String,
       required: true,
     },
+
     profile: {
       type: String,
-      required: true,   
+      default:
+        "https://images.pexels.com/photos/810775/pexels-photo-810775.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   },
   {
