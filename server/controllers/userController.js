@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 
 // controller for the register the user
@@ -35,9 +35,13 @@ exports.register = asyncHandler(async (req, res) => {
     });
 
     // Save a newly created user to database
+
+    // Save a newly created user to the database
     if (user) {
       const savedUser = await user.save();
-      res.status(201).json(savedUser);
+      res
+        .status(201)
+        .json({ message: "User registered successfully", user: savedUser });
     } else {
       res.status(400).json({ error: "Failed to create the user!" });
     }
