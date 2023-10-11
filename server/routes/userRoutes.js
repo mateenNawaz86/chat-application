@@ -7,6 +7,6 @@ const { validateUser, validate } = require("../middleware/validator");
 router.post("/register", validateUser, validate, userController.register);
 
 // API request for the login
-router.get("/sign-in", userController.signIn);
+router.post("/sign-in", userController.signIn);
 
 module.exports = router;

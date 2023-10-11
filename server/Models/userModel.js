@@ -23,8 +23,7 @@ const userModel = new Schema(
 
     profile: {
       type: String,
-      default:
-        "https://images.pexels.com/photos/810775/pexels-photo-810775.jpeg?auto=compress&cs=tinysrgb&w=600",
+      required: true,
     },
   },
   {

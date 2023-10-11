@@ -10,7 +10,7 @@ exports.register = asyncHandler(async (req, res) => {
   try {
     // IF any of the field is missing
     if (!name || !email || !password) {
-      res.status(400).json({ error: "Please fill up all the input filed!" });
+      res.status(401).json({ error: "Please fill up all the input filed!" });
     }
 
     // check if the user already exit or NOT
@@ -33,8 +33,6 @@ exports.register = asyncHandler(async (req, res) => {
       password: securePsw,
       profile: profile,
     });
-
-    // Save a newly created user to database
 
     // Save a newly created user to the database
     if (user) {
@@ -80,7 +78,11 @@ exports.signIn = asyncHandler(async (req, res) => {
     };
 
     const token = jwt.sign(data, process.env.JWT_SECRET);
-    res.status(201).json({ token, user });
+    if (user) {
+    }
+    res
+      .status(201)
+      .json({ message: "User sign in successfully!", token, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

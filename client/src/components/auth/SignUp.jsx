@@ -17,7 +17,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirm_password: "",
-    picture: "",
+    profile: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -34,10 +34,10 @@ const SignUp = () => {
     });
   };
 
-  const imageUploadHandler = (picture) => {
+  const imageUploadHandler = (profile) => {
     setLoading(true);
 
-    if (picture === undefined) {
+    if (profile === undefined) {
       toast({
         title: "Please select an image!",
         status: "warning",
@@ -50,12 +50,12 @@ const SignUp = () => {
     }
 
     if (
-      picture.type === "image/jpeg" ||
-      picture.type === "image/png" ||
-      picture.type === "image/jpg"
+      profile.type === "image/jpeg" ||
+      profile.type === "image/png" ||
+      profile.type === "image/jpg"
     ) {
       const data = new FormData();
-      data.append("file", picture);
+      data.append("file", profile);
       data.append("upload_preset", "chat-application");
       data.append("cloud_name", "dqjy4zlv9");
 
@@ -70,12 +70,12 @@ const SignUp = () => {
           return response.json();
         })
         .then((result) => {
-          const newPictureValue = result.url.toString();
+          const newProfileValue = result.url.toString();
           console.log(result.url.toString());
 
           setenteredInput((prevState) => ({
             ...prevState,
-            picture: newPictureValue,
+            profile: newProfileValue,
           }));
           setLoading(false);
         })
@@ -106,7 +106,7 @@ const SignUp = () => {
       !enteredInput.email ||
       !enteredInput.password ||
       !enteredInput.confirm_password ||
-      !enteredInput.picture
+      !enteredInput.profile
     ) {
       toast({
         title: "Please fill up all the fields.",
@@ -137,7 +137,7 @@ const SignUp = () => {
         name: enteredInput.name,
         email: enteredInput.email,
         password: enteredInput.password, // Send only the password
-        profile: enteredInput.picture, // Assuming you want to send the profile URL
+        profile: enteredInput.profile, // Assuming you want to send the profile URL
       });
 
       if (response.status === 201) {
