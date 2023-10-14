@@ -10,8 +10,6 @@ export const makePostRequest = async (endPoint, params) => {
         "Content-Type": "application/json",
       },
     });
-
-    console.log(response);
     return response;
   } catch (error) {
     console.error("API Error:", error);

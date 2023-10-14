@@ -79,12 +79,32 @@ exports.signIn = asyncHandler(async (req, res) => {
 
     const token = jwt.sign(data, process.env.JWT_SECRET);
     if (user) {
+      res
+        .status(201)
+        .json({ message: "User sign in successfully!", token, user });
     }
-    res
-      .status(201)
-      .json({ message: "User sign in successfully!", token, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
   }
+});
+
+// Controller for getting all the user
+exports.getAllUser = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        // OR operator work just like arithematic operator
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+        // Regex used for pattern matching string
+        // options "i" is used for case-sensitive means works for both
+        // upper and lowercase
+      }
+    : {};
+
+  // here i can return all other use except the logged-in one
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  res.send(users);
 });

@@ -53,34 +53,27 @@ const Login = () => {
       });
 
       if (response.status === 201) {
-        // User registered successfully
+        // User login successful
         toast({
-          title: response.data.message, // Display the success message from the server
+          title: response.data.message,
           status: "success",
           duration: 2000,
           isClosable: true,
           position: "bottom",
         });
         navigate("/chat");
-        console.log(response.data.user); // The user data
-      } // Handle validation errors
-      else if (response.status === 400) {
-        const errorResponse = await response.json();
-
-        if (Array.isArray(errorResponse)) {
-          errorResponse.forEach((error) => {
-            toast({
-              title: error.msg, // Display the error message
-              status: "error",
-              duration: 2000,
-              isClosable: true,
-              position: "bottom",
-            });
-          });
-        }
+      } else if (response.status === 401) {
+        const responseData = await response.json(); // Parse response data as JSON
+        toast({
+          title: responseData.error, // Display the error message from the server
+          status: "warning",
+          duration: 2000,
+          isClosable: true,
+          position: "bottom",
+        });
       }
     } catch (error) {
-      console.error("Error registering user:", error);
+      console.error("Error logging in:", error);
     }
   };
 
@@ -120,7 +113,13 @@ const Login = () => {
         <Button onClick={submitHandler} className="w-full" colorScheme="green">
           Login
         </Button>
-        <Button className="w-full" colorScheme="red">
+        <Button
+          onClick={() => {
+            setenteredInput({ email: "amir@gmail.com", password: "12345678" });
+          }}
+          className="w-full"
+          colorScheme="red"
+        >
           Get a guest user credentials
         </Button>
       </FormControl>

@@ -149,7 +149,9 @@ const SignUp = () => {
           isClosable: true,
           position: "bottom",
         });
-        console.log(response.data.user); // The user data
+
+        // here we store the use in the local storage
+        localStorage.setItem("user", JSON.stringify(response));
       } // Handle validation errors
       else if (response.status === 400) {
         const errorResponse = await response.json();
